@@ -28,8 +28,11 @@ class Command(BaseCommand):
     def create_students(self, count):
         fake = Faker('en_PH')
         for _ in range(count):
+            # Formatted student_id to be a single string
+            student_id = f"{fake.random_int(2020, 2025)}-{fake.random_int(1, 8)}-{fake.random_number(digits=4)}"
+            
             Student.objects.create(
-                student_id=f"{fake.random_int(2020, 2025)}-{fake.random_int(1, 8)}-{fake.random_number(digits=4)}",
+                student_id=student_id,
                 lastname=fake.last_name(),
                 firstname=fake.first_name(),
                 middlename=fake.last_name(),
