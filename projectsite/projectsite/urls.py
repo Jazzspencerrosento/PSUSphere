@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.urls import path, include
 from django.urls import path
 from studentorg.views import (
     HomePageView, 
@@ -10,6 +11,7 @@ from studentorg.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
     path('', HomePageView.as_view(), name='home'), 
     
     # Organization URLs
@@ -18,6 +20,5 @@ urlpatterns = [
     path('organization_list/<int:pk>/', OrganizationUpdateView.as_view(), name='organization-update'),
     path('organization_list/<int:pk>/delete/', OrganizationDeleteView.as_view(), name='organization-delete'),
     
-    # COMMENTED OUT because ProgramCreateView is not defined in views.py
-    # path('program/add/', ProgramCreateView.as_view(), name='program-add'),
+    
 ]
