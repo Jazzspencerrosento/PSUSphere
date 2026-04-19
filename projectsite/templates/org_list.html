@@ -16,56 +16,74 @@
           </div>
 
           <div class="card-body">
-
-            <!-- Search + Add Button -->
-            <div class="row mb-3 align-items-center">
-              <div class="col-md-6">
-                <form class="navbar-left navbar-form nav-search" action="">
-                  <div class="input-group">
-                    <input type="text" placeholder="Search ..." class="form-control" />
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                        <i class="la la-search search-icon"></i>
-                      </span>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div class="col-md-6 text-right">
-                <a href="{% url 'organization-add' %}" class="btn btn-success btn-rounded">
-                  Add Organization
-                </a>
-              </div>
+           <div class="row mb-4">
+            <div class="col-md-12">
+             <form method="get" action="{% url 'organization-list' %}" class="row g-3 align-items-center">
+        
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ request.GET.q }}">
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="submit">
+                <i class="la la-search"></i>
+              </button>
             </div>
+          </div>
+        </div>
 
-            <!-- Table -->
+        <div class="col-auto">
+          <label class="mb-0">Sort by:</label>
+        </div>
+        <div class="col-auto">
+          <select name="sort_by" class="form-control form-control-sm" onchange="this.form.submit()">
+            <option value="name" {% if request.GET.sort_by == 'name' %}selected{% endif %}>Name</option>
+            <option value="college" {% if request.GET.sort_by == 'college' %}selected{% endif %}>College</option>
+          </select>
+        </div>
+
+        <div class="col text-right">
+          <a href="{% url 'organization-add' %}" class="btn btn-success btn-rounded">
+            Add Organization
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+            
             <table class="table table-striped mt-3">
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">College</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Action</th>
+                  <th>Name</th>
+                  <th>College</th>
+                  
+                  <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
                 {% for object in object_list %}
                 <tr>
                   <td>{{ object.name }}</td>
                   <td>{{ object.college }}</td>
-                  <td>{{ object.description }}</td>
+                  
                   <td>
-  <a href="organization_list/{{ object.id }}">Edit</a>
-</td>
-</tr>
+                    <a href="{% url 'organization-update' object.id %}">
+                      Edit
+                    </a>
 
-{% empty %}
-<tr>
-  <td colspan="4" style="text-align: center">
-    <p class="text-sm font-weight-bold mb-0">No Records Found</p>
-  </td>
-</tr>
+                    <a href="{% url 'organization-delete' object.id %}"
+                       class="text-danger">
+                      Delete
+                    </a>
+                  </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                  <td colspan="4" class="text-center">
+                    No Records Found
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>

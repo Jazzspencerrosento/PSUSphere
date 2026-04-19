@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',                        # ← NEW: needed for allauth's site system
+    'allauth',                                     # ← NEW: core allauth
+    'allauth.account',                             # ← NEW: handles regular login/signup
+    'allauth.socialaccount',                       # ← NEW: handles social login
+    'allauth.socialaccount.providers.google',      # ← NEW: Google provider
+    'allauth.socialaccount.providers.github',      # ← NEW: GitHub provider
      "studentorg", 
      "widget_tweaks",
 ]
